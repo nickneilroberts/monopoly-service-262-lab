@@ -3,8 +3,8 @@
 This is the data service application for the
 [CS 262 sample Monopoly project](https://github.com/calvin-cs262-organization/monopoly-project),
  which is deployed here:
-
-- <https://262-monopoly-service-wa-c7afb6hjcmfmfwfg.canadacentral-01.azurewebsites.net/><br>(This URL may vary from year to year.)
+ 
+- <https://262-monopoly-service-wa-c7afb6hjcmfmfwfg.canadacentral-01.azurewebsites.net/><br>
 
 Based on this URL, the service implements the following endpoints:
 
