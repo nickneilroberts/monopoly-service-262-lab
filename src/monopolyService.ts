@@ -125,7 +125,7 @@ function readHello(_request: Request, response: Response): void {
  * Retrieves all games from the database
  */
 function readGames(_request: Request, response: Response, next: NextFunction): void {
-    db.manyOrNone('SELECT * FROM Games')
+    db.manyOrNone('SELECT * FROM Game')
         .then((data: Game[]): void => {
             // data is a list, never null, so returnDataOr404 isn't needed.
             response.send(data);
