@@ -45,6 +45,8 @@ import pgPromise from 'pg-promise';
 // Import types for compile-time checking.
 import type { Request, Response, NextFunction } from 'express';
 import type { Player, PlayerInput } from './player.js';
+import type { Game } from './game.ts';
+
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -124,7 +126,7 @@ function readHello(_request: Request, response: Response): void {
  */
 function readGames(_request: Request, response: Response, next: NextFunction): void {
     db.manyOrNone('SELECT * FROM Games')
-        .then((data: Player[]): void => {
+        .then((data: Game[]): void => {
             // data is a list, never null, so returnDataOr404 isn't needed.
             response.send(data);
         })
@@ -135,7 +137,7 @@ function readGames(_request: Request, response: Response, next: NextFunction): v
 
 function readGame(request: Request, response: Response, next: NextFunction): void {
     db.manyOrNone('SELECT PlayerGame.PlayerID, PlayerGame.score FROM PlayerGame WHERE PlayerGame.GameID =${id}', request.params)
-    .then((data: Player[] | null): void => {
+    .then((data: Game[] | null): void => {
         returnDataOr404(response, data);
     })
     .catch((error: Error):void => {
