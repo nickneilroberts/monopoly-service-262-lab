@@ -117,7 +117,7 @@ function returnDataOr404(response: Response, data: unknown): void {
  * health check and welcome message for the API.
  */
 function readHello(_request: Request, response: Response): void {
-    response.send('Hello, CS 262 Monopoly service! 6');
+    response.send('Hello, CS 262 Monopoly service!');
 
 }
 
