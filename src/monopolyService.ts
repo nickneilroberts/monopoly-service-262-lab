@@ -46,6 +46,10 @@ import pgPromise from 'pg-promise';
 import type { Request, Response, NextFunction } from 'express';
 import type { Player, PlayerInput } from './player.js';
 
+import dotenv from "dotenv";
+dotenv.config();
+
+
 // Set up the database
 const db = pgPromise()({
     host: process.env.DB_SERVER,
@@ -67,6 +71,9 @@ router.get('/players/:id', readPlayer);
 router.put('/players/:id', updatePlayer);
 router.post('/players', createPlayer);
 router.delete('/players/:id', deletePlayer);
+// router.get('/games', readGames);
+// router.get('games/:id', readGame);
+// router.delete('games/:id', deleteGame);
 
 // For testing only; vulnerable to SQL injection!
 // router.get('/bad/players/:id', readPlayerBad);
@@ -108,10 +115,48 @@ function returnDataOr404(response: Response, data: unknown): void {
  */
 function readHello(_request: Request, response: Response): void {
     response.send('Hello, CS 262 Monopoly service!');
+
 }
 
 // CRUD functions
+/**
+ * Retrieves all games from the database
+ */
+function readGames(_request: Request, response: Response, next: NextFunction): void {
+    db.manyOrNone('SELECT * FROM Games')
+        .then((data: Player[]): void => {
+            // data is a list, never null, so returnDataOr404 isn't needed.
+            response.send(data);
+        })
+        .catch((error: Error): void => {
+            next(error);
+        });
+}
 
+function readGame(request: Request, response: Response, next: NextFunction): void {
+    db.manyOrNone('SELECT PlayerGame.PlayerID, PlayerGame.score FROM PlayerGame WHERE PlayerGame.GameID =${id}', request.params)
+    .then((data: Player[] | null): void => {
+        returnDataOr404(response, data);
+    })
+    .catch((error: Error):void => {
+        next(error);
+    });
+}
+
+function deleteGame(request: Request, response: Response, next: NextFunction): void {
+    db.tx((t) => {
+        return t.none('DELETE FROM PlayerGame WHERE gameID=${id}', request.params)
+            .then(() => {
+                return t.oneOrNone('DELETE FROM Game WHERE id=${id} RETURNING id', request.params);
+            });
+    })
+        .then((data: { id: number } | null): void => {
+            returnDataOr404(response, data);
+        })
+        .catch((error: Error): void => {
+            next(error);
+        });
+}
 /**
  * Retrieves all players from the database.
  */
