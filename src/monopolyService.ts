@@ -46,6 +46,7 @@ import pgPromise from 'pg-promise';
 import type { Request, Response, NextFunction } from 'express';
 import type { Player, PlayerInput } from './player.js';
 import type { Game } from './game.js';
+import type { PlayerGame } from './playergame.js';
 
 
 import dotenv from "dotenv";
@@ -116,7 +117,7 @@ function returnDataOr404(response: Response, data: unknown): void {
  * health check and welcome message for the API.
  */
 function readHello(_request: Request, response: Response): void {
-    response.send('Hello, CS 262 Monopoly service! 5');
+    response.send('Hello, CS 262 Monopoly service! 6');
 
 }
 
@@ -136,8 +137,8 @@ function readGames(_request: Request, response: Response, next: NextFunction): v
 }
 
 function readGame(request: Request, response: Response, next: NextFunction): void {
-    db.manyOrNone('SELECT PlayerGame.PlayerID, PlayerGame.score FROM PlayerGame WHERE PlayerGame.GameID =${id}', request.params)
-    .then((data: Game[] | null): void => {
+    db.manyOrNone('SELECT PlayerGame.playerID, PlayerGame.score FROM PlayerGame WHERE PlayerGame.gameID=${id}', request.params)
+    .then((data: PlayerGame[] | null): void => {
         returnDataOr404(response, data);
     })
     .catch((error: Error):void => {

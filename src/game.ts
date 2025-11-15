@@ -9,8 +9,3 @@ export interface Game {
     id: number;
     time: string;
 }
-
-// export interface PlayerInput {
-//     email: string;
-//     name: string;
-// }
