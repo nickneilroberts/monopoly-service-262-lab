@@ -45,7 +45,7 @@ import pgPromise from 'pg-promise';
 // Import types for compile-time checking.
 import type { Request, Response, NextFunction } from 'express';
 import type { Player, PlayerInput } from './player.js';
-import type { Game } from './game.ts';
+import type { Game } from './game.js';
 
 
 import dotenv from "dotenv";
@@ -116,7 +116,7 @@ function returnDataOr404(response: Response, data: unknown): void {
  * health check and welcome message for the API.
  */
 function readHello(_request: Request, response: Response): void {
-    response.send('Hello, CS 262 Monopoly service! 2');
+    response.send('Hello, CS 262 Monopoly service! 3');
 
 }
 
