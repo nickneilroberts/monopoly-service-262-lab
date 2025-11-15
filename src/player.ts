@@ -6,9 +6,9 @@
  */
 
 export interface Player {
-    id: number;
+    id: string;
     email: string;
-    name: string;
+    // name: string;
 }
 
 export interface PlayerInput {
