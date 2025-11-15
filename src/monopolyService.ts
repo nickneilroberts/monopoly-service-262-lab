@@ -71,9 +71,9 @@ router.get('/players/:id', readPlayer);
 router.put('/players/:id', updatePlayer);
 router.post('/players', createPlayer);
 router.delete('/players/:id', deletePlayer);
-// router.get('/games', readGames);
-// router.get('games/:id', readGame);
-// router.delete('games/:id', deleteGame);
+router.get('/games', readGames);
+router.get('games/:id', readGame);
+router.delete('games/:id', deleteGame);
 
 // For testing only; vulnerable to SQL injection!
 // router.get('/bad/players/:id', readPlayerBad);
