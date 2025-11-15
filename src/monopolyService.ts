@@ -76,7 +76,7 @@ router.post('/players', createPlayer);
 router.delete('/players/:id', deletePlayer);
 router.get('/games', readGames);
 router.get('/games/:id', readGame);
-router.delete('games/:id', deleteGame);
+router.delete('/games/:id', deleteGame);
 
 // For testing only; vulnerable to SQL injection!
 // router.get('/bad/players/:id', readPlayerBad);
@@ -137,7 +137,7 @@ function readGames(_request: Request, response: Response, next: NextFunction): v
 }
 
 function readGame(request: Request, response: Response, next: NextFunction): void {
-    db.manyOrNone('SELECT PlayerGame.playerID, PlayerGame.score FROM PlayerGame WHERE PlayerGame.gameID=${id}', request.params)
+    db.manyOrNone('SELECT Player.name, PlayerGame.score FROM PlayerGame, Player WHERE PlayerGame.gameID=${id} AND PlayerGame.playerID=Player.ID', request.params)
     .then((data: PlayerGame[] | null): void => {
         returnDataOr404(response, data);
     })
